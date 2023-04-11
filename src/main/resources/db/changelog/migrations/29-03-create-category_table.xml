@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <property name="author" global="false" value="nmakarov"/>
+    <property name="table.name" global="false" value="category"/>
+
+    <!--TABLE-->
+    <changeSet id="create-${table.name}_table" author="${author}">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="${table.name}"/>
+            </not>
+        </preConditions>
+        <createTable tableName="${table.name}">
+            <column name="category_id" type="numeric(15,0)"/>
+            <column name="category_name" type="varchar(255)"/>
+        </createTable>
+        <createSequence sequenceName="${table.name}_category_id_seq" incrementBy="1" startValue="1"/>
+        <addPrimaryKey tableName="${table.name}" columnNames="category_id" constraintName="pk_${table.name}"/>
+    </changeSet>
+
+    <!--INDEXES-->
+    <changeSet id="create-${table.name}_index" author="${author}">
+        <preConditions onFail="WARN">
+            <columnExists tableName="${table.name}" columnName="category_id"/>
+        </preConditions>
+        <createIndex tableName="${table.name}" indexName="${table.name}_category_id_index">
+            <column name="category_id"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

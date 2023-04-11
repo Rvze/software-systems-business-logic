@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <property name="author" global="false" value="nmakarov"/>
+    <property name="table.name" global="false" value="product"/>
+
+    <!--TABLE-->
+    <changeSet id="create-${table.name}_table" author="${author}">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="${table.name}"/>
+            </not>
+        </preConditions>
+        <createTable tableName="${table.name}">
+            <column name="product_id" type="numeric(15,0)"/>
+            <column name="product_name" type="varchar(255)"/>
+            <column name="product_price" type="numeric(15,5)"/>
+            <column name="characteristic_id" type="numeric(15,0)"/>
+            <column name="trademark_id" type="numeric(15,0)"/>
+        </createTable>
+        <createSequence sequenceName="${table.name}_product_id_seq" incrementBy="1" startValue="1"/>
+        <addPrimaryKey tableName="${table.name}" columnNames="product_id" constraintName="pk_${table.name}"/>
+    </changeSet>
+
+    <!--INDEXES-->
+    <changeSet id="create-${table.name}-indexes" author="${author}">
+        <preConditions onFail="MARK_RAN">
+            <columnExists tableName="${table.name}" columnName="product_id"/>
+            <columnExists tableName="${table.name}" columnName="characteristic_id"/>
+            <columnExists tableName="${table.name}" columnName="trademark_id"/>
+        </preConditions>
+        <createIndex tableName="${table.name}" indexName="${table.name}_product_id_index">
+            <column name="product_id"/>
+        </createIndex>
+        <createIndex tableName="${table.name}" indexName="${table.name}_characteristic_id_index">
+            <column name="characteristic_id"/>
+        </createIndex>
+        <createIndex tableName="${table.name}" indexName="${table.name}_trademark_id_index">
+            <column name="trademark_id"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>
