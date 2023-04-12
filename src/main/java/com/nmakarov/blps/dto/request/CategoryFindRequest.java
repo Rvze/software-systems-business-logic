@@ -14,6 +14,9 @@ import java.io.Serializable;
 @Builder
 public class CategoryFindRequest implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    @JsonProperty("id")
+    private Long id;
     @JsonProperty("categoryName")
     private String categoryName;
 }

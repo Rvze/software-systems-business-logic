@@ -14,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import com.nmakarov.blps.utils.ExceptionsUtils.*;
 
 import static com.nmakarov.blps.utils.ErrorMessages.CATEGORY_NOT_FOUND;
 import static java.util.Optional.ofNullable;
@@ -35,6 +34,7 @@ public class CategoryService {
         BooleanBuilder bb = new BooleanBuilder();
         QCategory q = QCategory.category;
         ofNullable(predicate.getCategoryName()).map(q.categoryName::eq).ifPresent(bb::and);
+        ofNullable(predicate.getId()).map(q.categoryId::eq).ifPresent(bb::and);
         return repository.findAll(bb, pageable).map(mapper::to);
     }
 

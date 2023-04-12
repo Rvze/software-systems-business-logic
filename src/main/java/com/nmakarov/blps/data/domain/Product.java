@@ -28,7 +28,7 @@ public class Product {
 
     @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "characteristic_id", referencedColumnName = "characteristic_id")
-    private Characteristic characteristicId;
+    private Characteristic characteristic;
 
     @ManyToOne
     @JoinColumn(name = "trademark_id")
