@@ -14,4 +14,9 @@ public final class ErrorMessages {
      * Characteristic
      */
     public static final String CHARACTERISTIC_NOT_FOUND = "characteristic.not-found";
+
+    /**
+     * Trademark
+     */
+    public static final String TRADEMARK_NOT_FOUND = "trademark.not-found";
 }

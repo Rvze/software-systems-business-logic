@@ -1,11 +1,9 @@
 package com.nmakarov.blps.data.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -14,9 +12,11 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 @Getter
+@Setter
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_product_id_seq")
+    @SequenceGenerator(name = "product_product_id_seq", allocationSize = 1)
     @Column(name = "product_id")
     private Long productId;
 
@@ -26,7 +26,10 @@ public class Product {
     @Column(name = "product_price")
     private Double productPrice;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @Column(name = "count")
+    private Integer count;
+
+    @OneToOne
     @JoinColumn(name = "characteristic_id", referencedColumnName = "characteristic_id")
     private Characteristic characteristic;
 
@@ -45,4 +48,24 @@ public class Product {
             }
     )
     private Set<Category> categories;
+
+    public Characteristic getCharacteristic() {
+        return characteristic;
+    }
+
+    public void setCharacteristic(Characteristic characteristic) {
+        if (sameAsFormer(characteristic))
+            return;
+        Characteristic oldCharacteristic = this.characteristic;
+        this.characteristic = characteristic;
+        if (oldCharacteristic != null)
+            oldCharacteristic.setProduct(null);
+        if (characteristic != null)
+            characteristic.setProduct(this);
+        this.characteristic = characteristic;
+    }
+
+    private boolean sameAsFormer(Characteristic newCharacteristic) {
+        return Objects.equals(characteristic, newCharacteristic);
+    }
 }

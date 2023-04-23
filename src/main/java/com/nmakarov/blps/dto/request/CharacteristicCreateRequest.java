@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class CharacteristicCreateRequest {
     @JsonProperty("country")
-    private Country country;
+    private String country;
 
     @JsonProperty("weight")
     private Double weight;

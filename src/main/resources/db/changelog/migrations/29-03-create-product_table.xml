@@ -42,4 +42,18 @@
             <column name="trademark_id"/>
         </createIndex>
     </changeSet>
+    <!--addNewColumn `count`-->
+    <changeSet id="add-column-count-discount-${table.name}" author="${author}">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <columnExists tableName="${table.name}" columnName="count"/>
+            </not>
+        </preConditions>
+        <addColumn tableName="${table.name}">
+            <column name="count" type="int"/>
+        </addColumn>
+        <addColumn tableName="${table.name}">
+            <column name="discount" type="int"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

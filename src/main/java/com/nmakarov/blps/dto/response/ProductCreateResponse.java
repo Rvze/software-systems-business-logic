@@ -18,4 +18,7 @@ public class ProductCreateResponse implements Serializable {
     @JsonProperty("productPrice")
     private Double productPrice;
 
+    @JsonProperty("count")
+    private Integer count;
+
 }

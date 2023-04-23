@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 public class ProductCreateRequest implements Serializable {
@@ -17,4 +18,10 @@ public class ProductCreateRequest implements Serializable {
 
     @JsonProperty("characteristicId")
     private Long characteristicId;
+    @JsonProperty("trademarkId")
+    private Long trademarkId;
+    @JsonProperty("count")
+    private Integer count;
+    @JsonProperty("categoriesId")
+    private List<Long> categoriesId;
 }

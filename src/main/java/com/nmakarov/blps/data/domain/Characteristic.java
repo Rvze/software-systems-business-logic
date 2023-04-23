@@ -3,6 +3,7 @@ package com.nmakarov.blps.data.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "characteristic")
@@ -15,6 +16,7 @@ public class Characteristic {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "characteristic_characteristic_id_seq")
+    @SequenceGenerator(name = "characteristic_characteristic_id_seq", allocationSize = 1)
     @Column(name = "characteristic_id")
     private Long characteristicId;
 
@@ -36,4 +38,26 @@ public class Characteristic {
 
     @Column(name = "structure")
     private String structure;
+    @OneToOne(mappedBy = "characteristic")
+    private Product product;
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        if (isSame(product))
+            return;
+        Product oldProduct = this.product;
+        this.product = product;
+        if (oldProduct != null)
+            oldProduct.setCharacteristic(null);
+        if (product != null)
+            product.setCharacteristic(this);
+        this.product = product;
+    }
+
+    private boolean isSame(Product newProduct) {
+        return Objects.equals(product, newProduct);
+    }
 }

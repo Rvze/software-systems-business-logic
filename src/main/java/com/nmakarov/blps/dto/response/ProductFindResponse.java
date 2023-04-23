@@ -18,6 +18,9 @@ public class ProductFindResponse implements Serializable {
     @JsonProperty("productPrice")
     private Double productPrice;
 
+    @JsonProperty("count")
+    private Integer count;
+
     @JsonProperty("country")
     private Country country;
 

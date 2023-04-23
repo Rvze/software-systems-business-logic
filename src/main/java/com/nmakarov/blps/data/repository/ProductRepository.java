@@ -7,5 +7,5 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 public interface ProductRepository extends JpaRepository<Product, Long>,
         QuerydslPredicateExecutor<Product> {
 
-    boolean existsProductByCharacteristicId(Long characteristicId);
+    boolean existsProductByCharacteristic(Long characteristicId);
 }

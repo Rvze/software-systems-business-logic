@@ -29,6 +29,7 @@ public class CharacteristicService {
     private final ResourceService res;
     private final CharacteristicMapper mapper;
 
+    @Transactional
     public CharacteristicResponse createCharacteristic(CharacteristicCreateRequest request) {
         return mapper.toCreate(repository.save(mapper.toEntity(request)));
     }
@@ -54,7 +55,7 @@ public class CharacteristicService {
 
 
     public void deleteCharacteristicById(Long id) {
-        ifThrow(!repository.existsById(id), () -> notFound(res.localize(CHARACTERISTIC_NOT_FOUND)));
+        ifThrow(!repository.existsById(id), () -> notFound(res.localize(CHARACTERISTIC_NOT_FOUND, id)));
         repository.deleteById(id);
     }
 

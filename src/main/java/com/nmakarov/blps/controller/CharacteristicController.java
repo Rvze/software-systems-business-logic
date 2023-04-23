@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class CharacteristicController {
     private final CharacteristicService characteristicService;
 
-    @PostMapping("/create")
+    @PostMapping("/create-characteristic")
     public ResponseEntity<CharacteristicResponse> createCharacteristic(
             @RequestBody(required = false) CharacteristicCreateRequest request
     ) {
@@ -26,7 +26,7 @@ public class CharacteristicController {
 
     }
 
-    @PutMapping("update/{id}")
+    @PutMapping("update-characteristic/{id}")
     public ResponseEntity<CharacteristicResponse> updateCharacteristic(
             @PathVariable Long id, @RequestBody CharacteristicUpdateRequest request
     ) {
@@ -34,7 +34,7 @@ public class CharacteristicController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @GetMapping("/find")
+    @GetMapping("/find-characteristic")
     public ResponseEntity<Page<CharacteristicResponse>> findCharacteristic(
             @RequestBody CharacteristicFindRequest findRequest,
             Pageable pageable
@@ -44,7 +44,7 @@ public class CharacteristicController {
     }
 
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete-characteristic/{id}")
     public ResponseEntity<Void> deleteCharacteristic(
             @PathVariable Long id
     ) {
