@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <property name="author" global="false" value="nmakarov"/>
+    <property name="table.name" global="false" value="backet"/>
+    <!--CREATE TABLE-->
+    <changeSet id="create-${table.name}_table" author="${author}">
+        <preConditions>
+            <not>
+                <tableExists tableName="${table.name}"/>
+            </not>
+        </preConditions>
+        <createTable tableName="${table.name}">
+            <column name="backet_id" type="numeric(15,0)" remarks="PK"/>
+            <column name="user_id" type="numeric(15,0)" remarks="FK(user_id)"/>
+            <column name="product_id" type="numeric(15,0)" remarks="FK(product_id"/>
+            <column name="count" type="int" remarks="Кол-во товара"/>
+            <column name="order_id" type="numeric(15,0)" remarks="FK(order_id)"/>
+            <column name="total_cost" type="double" remarks="Общая стоимость"/>
+        </createTable>
+        <createSequence sequenceName="${table.name}_backet_id_seq" startValue="1" incrementBy="1"/>
+        <addPrimaryKey tableName="${table.name}" columnNames="backet_id" constraintName="pk_${table.name}"/>
+    </changeSet>
+    <!--CREATE INDEXES-->
+    <changeSet id="create-${table.name}_indexes" author="${author}">
+        <preConditions>
+            <not>
+                <indexExists indexName="${table.name}_user_id_idx"/>
+                <indexExists indexName="${table.name}_product_id_idx"/>
+                <indexExists indexName="${table.name}_order_id_idx"/>
+            </not>
+        </preConditions>
+        <createIndex tableName="${table.name}" indexName="${table.name}_user_id_idx">
+            <column name="user_id"/>
+        </createIndex>
+        <createIndex tableName="${table.name}" indexName="${table.name}_product_id_idx">
+            <column name="product_id"/>
+        </createIndex>
+        <createIndex tableName="${table.name}" indexName="${table.name}_order_id_idx">
+            <column name="order_id"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

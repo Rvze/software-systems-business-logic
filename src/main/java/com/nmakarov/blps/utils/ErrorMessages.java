@@ -19,4 +19,9 @@ public final class ErrorMessages {
      * Trademark
      */
     public static final String TRADEMARK_NOT_FOUND = "trademark.not-found";
+    /**
+     * Backet
+     */
+    public static final String BACKET_NOT_FOUND = "backet.not-found";
+    public static final String BACKET_DOES_NOT_EXIST = "backet.does-not-exist";
 }

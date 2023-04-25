@@ -6,5 +6,42 @@
 
     <property name="author" global="false" value="nmakarov"/>
     <property name="table.name" global="false" value="user"/>
+    <changeSet id="create-${table.name}_table" author="${author}">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="${table.name}"/>
+            </not>
+        </preConditions>
+        <createTable tableName="${table.name}">
+            <column name="user_id" type="numeric(15,0)"/>
+            <column name="username" type="varchar(30)"/>
+            <column name="email_address" type="varchar(40)"/>
+            <column name="phone_number" type="varchar(12)"/>
+        </createTable>
+        <createSequence sequenceName="${table.name}_user_id_seq" startValue="1" incrementBy="1"/>
+        <addPrimaryKey tableName="${table.name}" columnNames="user_id" constraintName="pk_${table.name}"/>
+    </changeSet>
+    <!--INDEXES-->
+    <changeSet id="crete-${table.name}_index" author="${author}">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <indexExists indexName="${table.name}_user_id_idx"/>
+            </not>
+            <columnExists tableName="${table.name}" columnName="user_id"/>
+        </preConditions>
+        <createIndex tableName="${table.name}" indexName="${table.name}_user_id_idx">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="create-${table.name}_username_index" author="${author}">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <indexExists indexName="${table.name}_username_idx"/>
+            </not>
+        </preConditions>
+        <createIndex tableName="${table.name}" indexName="${table.name}_username_idx">
+            <column name="username"/>
+        </createIndex>
+    </changeSet>
 
 </databaseChangeLog>

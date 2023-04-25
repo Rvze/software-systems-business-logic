@@ -12,10 +12,8 @@ public class ProductCreateRequest implements Serializable {
 
     @JsonProperty("productName")
     private String productName;
-
     @JsonProperty("productPrice")
     private Double productPrice;
-
     @JsonProperty("characteristicId")
     private Long characteristicId;
     @JsonProperty("trademarkId")
