@@ -50,7 +50,7 @@ public class ProductService {
         ofNullable(request.getId()).map(q.productId::eq).ifPresent(bb::and);
         ofNullable(request.getProductName()).map(q.productName::containsIgnoreCase).ifPresent(bb::and);
         ofNullable(request.getProductPrice()).map(q.productPrice::eq).ifPresent(bb::and);
-        Optional.of(Country.valueOf(request.getCountry())).map(q.characteristic.country::eq).ifPresent(bb::and);
+        Optional.ofNullable(request.getCountry() != null ? Country.valueOf(request.getCountry()) : null).map(q.characteristic.country::eq).ifPresent(bb::and);
         ofNullable(request.getWeight()).map(q.characteristic.weight::eq).ifPresent(bb::and);
         ofNullable(request.getHeight()).map(q.characteristic.height::eq).ifPresent(bb::and);
         ofNullable(request.getLength()).map(q.characteristic.length::eq).ifPresent(bb::and);

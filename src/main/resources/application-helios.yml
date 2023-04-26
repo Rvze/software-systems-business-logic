@@ -1,0 +1,21 @@
+server:
+  port: 8081
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/studs
+    username: s311735
+    password: HEGVxAErL8gsmbIK
+  jpa:
+    show-sql: true
+    database: postgresql
+    generate-ddl: false
+    properties:
+      hibernate:
+        format_sql: true
+        default_schema: s311735
+  liquibase:
+    change-log: classpath*:db/changelog/rootChangeLog.xml
+    enabled: false
+  messages:
+    basename: i18n/messages
