@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5433/blps?currentSchema=lab1
+  jpa:
+    show-sql: true
+    database: postgresql
+    generate-ddl: false
+    properties:
+      hibernate:
+        format_sql: true
+  liquibase:
+    change-log: classpath*:db/changelog/rootChangeLog.xml
+    enabled: false
+  messages:
+    basename: i18n/messages

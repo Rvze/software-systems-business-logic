@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <property name="author" global="false" value="nmakarov"/>
+    <property name="table.name" global="false" value="trademark"/>
+
+    <!--TABLE-->
+    <changeSet id="create-${table.name}_table" author="${author}">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="${table.name}"/>
+            </not>
+        </preConditions>
+        <createTable tableName="${table.name}">
+            <column name="trademark_id" type="numeric(15)"/>
+            <column name="trademakr_name" type="varchar(255)"/>
+        </createTable>
+        <createSequence sequenceName="${table.name}_trademark_id_seq" incrementBy="1" startValue="1"/>
+        <addPrimaryKey tableName="${table.name}" columnNames="trademark_id" constraintName="pk_${table.name}"/>
+    </changeSet>
+
+    <!--INDEXES-->
+    <changeSet id="create-${table.name}_indexes" author="${author}">
+        <preConditions onFail="WARN">
+            <columnExists tableName="${table.name}" columnName="trademark_id"/>
+        </preConditions>
+        <createIndex tableName="${table.name}" indexName="${table.name}_trademark_id_index">
+            <column name="trademark_id"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>
