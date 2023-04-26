@@ -1,7 +1,6 @@
 package com.nmakarov.blps.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.nmakarov.blps.data.domain.Country;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,7 +11,7 @@ public class CharacteristicFindRequest implements Serializable {
     @JsonProperty("characteristicId")
     private Long characteristicId;
     @JsonProperty("country")
-    private Country country;
+    private String country;
     @JsonProperty("weight")
     private Double weight;
     @JsonProperty("height")

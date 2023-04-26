@@ -43,4 +43,7 @@ public class ProductOrder implements Serializable {
     @Column(name = "total_cost")
     private Double totalCost;
 
+    @Column(name = "count")
+    private Integer count;
+
 }

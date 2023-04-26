@@ -24,4 +24,9 @@ public final class ErrorMessages {
      */
     public static final String BACKET_NOT_FOUND = "backet.not-found";
     public static final String BACKET_DOES_NOT_EXIST = "backet.does-not-exist";
+
+    /**
+     * Order
+     */
+    public static final String ORDER_NOT_FOUND = "order.not-found";
 }

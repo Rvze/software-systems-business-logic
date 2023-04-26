@@ -7,6 +7,7 @@ import com.nmakarov.blps.data.repository.UserRepository;
 import com.nmakarov.blps.dto.mapper.OrderMapper;
 import com.nmakarov.blps.dto.mapper.ProductMapper;
 import com.nmakarov.blps.dto.request.OrderCreateRequest;
+import com.nmakarov.blps.dto.request.OrderUpdateRequest;
 import com.nmakarov.blps.dto.response.OrderCreateResponse;
 import com.nmakarov.blps.dto.response.OrderCreateResponseAscendingByDate;
 import com.nmakarov.blps.dto.response.ProductCreateResponse;
@@ -23,7 +24,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.nmakarov.blps.utils.ErrorMessages.BACKET_DOES_NOT_EXIST;
+import static com.nmakarov.blps.utils.ErrorMessages.ORDER_NOT_FOUND;
 import static com.nmakarov.blps.utils.ExceptionsUtils.badRequest;
+import static com.nmakarov.blps.utils.ExceptionsUtils.notFound;
 import static com.nmakarov.blps.utils.ServiceUtils.defaultSortDesc;
 import static java.util.Optional.ofNullable;
 
@@ -69,6 +72,16 @@ public class OrderService {
         ofNullable(userId).map(q.user.id::eq).ifPresent(bb::and);
         return repository.findAll(bb, defaultSortDesc(pageable, "creationDate"))
                 .map(mapper::toFind);
+    }
+
+    public OrderCreateResponse updateOrder(Long id, OrderUpdateRequest request) {
+        ProductOrder order = repository.findById(id).orElseThrow(() -> (notFound(res.localize(ORDER_NOT_FOUND, id))));
+        List<Backet> backets = backetRepository.findAllByProductOrder(order);
+        List<ProductCreateResponse> productCreateResponses =
+                backets.stream().map(Backet::getProduct)
+                        .map(productMapper::toCreate).collect(Collectors.toList());
+        mapper.update(order, request);
+        return mapper.toCreate(repository.save(order), productCreateResponses);
     }
 
 

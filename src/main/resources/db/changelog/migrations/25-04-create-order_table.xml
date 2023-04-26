@@ -20,6 +20,7 @@
             <column name="delivery_data" type="date" remarks="Дата доставки"/>
             <column name="status" type="varchar(20)" remarks="Статус заказа"/>
             <column name="total_cost" type="double" remarks="Суммарная стоимость заказа"/>
+            <column name="count" type="int" remarks="Кол-во товаров"/>
         </createTable>
         <createSequence sequenceName="${table.name}_product_order_id_id_seq" incrementBy="1" startValue="1"/>
         <addPrimaryKey tableName="${table.name}" columnNames="product_order_id" constraintName="pk_${table.name}"/>

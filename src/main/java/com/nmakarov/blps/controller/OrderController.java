@@ -1,6 +1,7 @@
 package com.nmakarov.blps.controller;
 
 import com.nmakarov.blps.dto.request.OrderCreateRequest;
+import com.nmakarov.blps.dto.request.OrderUpdateRequest;
 import com.nmakarov.blps.dto.response.OrderCreateResponse;
 import com.nmakarov.blps.dto.response.OrderCreateResponseAscendingByDate;
 import com.nmakarov.blps.service.OrderService;
@@ -31,6 +32,15 @@ public class OrderController {
             @RequestParam Long userId,
             Pageable pageable) {
         var response = service.findAll(userId, pageable);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @PutMapping("update-order/{id}")
+    public ResponseEntity<OrderCreateResponse> updateOrder(
+            @PathVariable Long id,
+            @RequestBody OrderUpdateRequest request
+    ) {
+        var response = service.updateOrder(id, request);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 

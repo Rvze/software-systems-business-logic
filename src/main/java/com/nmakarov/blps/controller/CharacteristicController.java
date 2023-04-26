@@ -5,7 +5,9 @@ import com.nmakarov.blps.dto.request.CharacteristicFindRequest;
 import com.nmakarov.blps.dto.request.CharacteristicUpdateRequest;
 import com.nmakarov.blps.dto.response.CharacteristicResponse;
 import com.nmakarov.blps.service.CharacteristicService;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -35,9 +37,10 @@ public class CharacteristicController {
     }
 
     @GetMapping("/find-characteristic")
+    @PageableAsQueryParam
     public ResponseEntity<Page<CharacteristicResponse>> findCharacteristic(
-            @RequestBody CharacteristicFindRequest findRequest,
-            Pageable pageable
+            CharacteristicFindRequest findRequest,
+            @Parameter(hidden = true) Pageable pageable
     ) {
         Page<CharacteristicResponse> responsePage = characteristicService.findCharacteristic(findRequest, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(responsePage);

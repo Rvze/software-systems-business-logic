@@ -1,6 +1,7 @@
 package com.nmakarov.blps.service;
 
 import com.nmakarov.blps.data.domain.Characteristic;
+import com.nmakarov.blps.data.domain.Country;
 import com.nmakarov.blps.data.domain.QCharacteristic;
 import com.nmakarov.blps.data.repository.CharacteristicRepository;
 import com.nmakarov.blps.dto.mapper.CharacteristicMapper;
@@ -50,6 +51,7 @@ public class CharacteristicService {
         ofNullable(predicate.getLength()).map(q.length::eq).ifPresent(bb::and);
         ofNullable(predicate.getWidth()).map(q.width::eq).ifPresent(bb::and);
         ofNullable(predicate.getStructure()).map(q.structure::eq).ifPresent(bb::and);
+        ofNullable(predicate.getCountry() != null ? Country.valueOf(predicate.getCountry()) : null).map(q.country::eq).ifPresent(bb::and);
         return repository.findAll(bb, pageable).map(mapper::toCreate);
     }
 
