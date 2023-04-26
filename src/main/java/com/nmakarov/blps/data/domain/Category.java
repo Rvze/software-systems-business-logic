@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 
@@ -15,7 +16,8 @@ import java.util.Set;
 @Setter
 @ToString
 @Builder
-public class Category {
+public class Category implements Serializable {
+    private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "category_category_id_seq")
     @SequenceGenerator(name = "category_category_id_seq", allocationSize = 1)

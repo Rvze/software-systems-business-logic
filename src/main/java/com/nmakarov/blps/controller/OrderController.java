@@ -5,6 +5,7 @@ import com.nmakarov.blps.dto.response.OrderCreateResponse;
 import com.nmakarov.blps.dto.response.OrderCreateResponseAscendingByDate;
 import com.nmakarov.blps.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springdoc.core.converters.models.PageableAsQueryParam;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,7 @@ public class OrderController {
 
     //TODO по токену посмотреть
     @GetMapping("/findAllOrders")
+    @PageableAsQueryParam
     public ResponseEntity<Page<OrderCreateResponseAscendingByDate>> findAllOrdersAscendingByDate(
             @RequestParam Long userId,
             Pageable pageable) {

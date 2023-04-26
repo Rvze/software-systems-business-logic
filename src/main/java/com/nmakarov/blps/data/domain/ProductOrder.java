@@ -8,17 +8,18 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "order")
+@Table(name = "product_order")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Order implements Serializable {
+public class ProductOrder implements Serializable {
     private static final Long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_order_id_seq")
-    @SequenceGenerator(name = "order_order_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_order_product_order_id_id_seq")
+    @SequenceGenerator(name = "product_order_product_order_id_id_seq", allocationSize = 1)
+    @Column(name = "product_order_id")
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)

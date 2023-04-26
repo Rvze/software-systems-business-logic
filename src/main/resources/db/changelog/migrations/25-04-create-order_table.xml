@@ -5,7 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <property name="author" global="false" value="nmakarov"/>
-    <property name="table.name" global="false" value="order"/>
+    <property name="table.name" global="false" value="product_order"/>
     <changeSet id="create-${table.name}_table" author="${author}">
         <preConditions onFail="MARK_RAN">
             <not>
@@ -13,7 +13,7 @@
             </not>
         </preConditions>
         <createTable tableName="${table.name}">
-            <column name="order_id" type="numeric(19,0)" remarks="PK"/>
+            <column name="product_order_id" type="numeric(19,0)" remarks="PK"/>
             <column name="user_id" type="numeric(19,0)" remarks="FK(user_id)"/>
             <column name="creation_date" type="datetime" remarks="Дата и Время создания заказа"/>
             <column name="payment_method" type="varchar(30)" remarks="Способ оплаты заказа"/>
@@ -21,19 +21,19 @@
             <column name="status" type="varchar(20)" remarks="Статус заказа"/>
             <column name="total_cost" type="double" remarks="Суммарная стоимость заказа"/>
         </createTable>
-        <createSequence sequenceName="${table.name}_order_id_seq" incrementBy="1" startValue="1"/>
-        <addPrimaryKey tableName="${table.name}" columnNames="order_id" constraintName="pk_${table.name}"/>
+        <createSequence sequenceName="${table.name}_product_order_id_id_seq" incrementBy="1" startValue="1"/>
+        <addPrimaryKey tableName="${table.name}" columnNames="product_order_id" constraintName="pk_${table.name}"/>
     </changeSet>
 
     <changeSet id="create-${table.name}_index" author="${author}">
         <preConditions>
             <not>
-                <indexExists indexName="${table.name}_order_id_idx"/>
+                <indexExists indexName="${table.name}_product_order_id_idx"/>
                 <indexExists indexName="${table.name}_user_id_idx"/>
             </not>
         </preConditions>
-        <createIndex tableName="${table.name}" indexName="${table.name}_order_id_idx">
-            <column name="order_id"/>
+        <createIndex tableName="${table.name}" indexName="${table.name}_product_order_id_idx">
+            <column name="product_order_id"/>
         </createIndex>
         <createIndex tableName="${table.name}" indexName="${table.name}_user_id_idx">
             <column name="user_id"/>

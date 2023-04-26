@@ -23,11 +23,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.nmakarov.blps.utils.ErrorMessages.BACKET_DOES_NOT_EXIST;
-import static com.nmakarov.blps.utils.ErrorMessages.BACKET_NOT_FOUND;
 import static com.nmakarov.blps.utils.ExceptionsUtils.badRequest;
 import static com.nmakarov.blps.utils.ServiceUtils.defaultSortDesc;
 import static java.util.Optional.ofNullable;
-import static com.nmakarov.blps.utils.ExceptionsUtils.notFound;
 
 @Service
 @RequiredArgsConstructor
@@ -41,13 +39,13 @@ public class OrderService {
 
     @Transactional
     public OrderCreateResponse createOrder(OrderCreateRequest request) {
-        List<Backet> backets = backetRepository.findALlByUserId(request.getUserId());
+        User user = userRepository.findById(request.getUserId()).get();
+        List<Backet> backets = backetRepository.findAllByUser(user);
         if (backets.isEmpty()) {
             throw badRequest(res.localize(BACKET_DOES_NOT_EXIST));
         }
 
-        User user = userRepository.findById(request.getUserId()).get();
-        Order order = Order.builder().user(user).creationDate(LocalDateTime.now())
+        ProductOrder productOrder = ProductOrder.builder().user(user).creationDate(LocalDateTime.now())
                 .paymentMethod(PaymentMethod.numOf(request.getPaymentMethod()))
                 .deliveryDate(LocalDate.of(2023, 5, 10))
                 .status(Status.WAIT)
@@ -59,12 +57,15 @@ public class OrderService {
         List<ProductCreateResponse> productCreateResponses =
                 backets.stream().map(Backet::getProduct)
                         .map(productMapper::toCreate).collect(Collectors.toList());
-        return mapper.toCreate(repository.save(order), productCreateResponses);
+        OrderCreateResponse orderCreateResponse = mapper.toCreate(repository.save(productOrder), productCreateResponses);
+        backets.forEach(b -> b.setProductOrder(productOrder));
+        backetRepository.saveAll(backets);
+        return orderCreateResponse;
     }
 
     public Page<OrderCreateResponseAscendingByDate> findAll(Long userId, Pageable pageable) {
         BooleanBuilder bb = new BooleanBuilder();
-        QOrder q = QOrder.order;
+        QProductOrder q = QProductOrder.productOrder;
         ofNullable(userId).map(q.user.id::eq).ifPresent(bb::and);
         return repository.findAll(bb, defaultSortDesc(pageable, "creationDate"))
                 .map(mapper::toFind);

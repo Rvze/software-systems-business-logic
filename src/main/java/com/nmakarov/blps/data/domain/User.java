@@ -19,6 +19,7 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_user_id_seq")
     @SequenceGenerator(name = "user_user_id_seq", allocationSize = 1)
+    @Column(name = "user_id")
     private Long id;
 
     @Column(name = "username")
@@ -32,7 +33,7 @@ public class User implements Serializable {
     private String phoneNumber;
 
     @OneToMany(mappedBy = "user")
-    private Set<Order> orders;
+    private Set<ProductOrder> productOrders;
 
     @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(
@@ -43,6 +44,6 @@ public class User implements Serializable {
             @JoinColumn(name = "product_id")
     }
     )
-    private Set<Product> product;
+    private Set<Product> products;
 
 }

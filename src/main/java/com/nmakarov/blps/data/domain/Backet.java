@@ -9,11 +9,11 @@ import javax.persistence.*;
 @Table(name = "backet")
 @Getter
 @Setter
-@IdClass(User.class)
 public class Backet {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "backet_backet_id_seq")
     @SequenceGenerator(name = "backet_backet_id_seq", allocationSize = 1)
+    @Column(name = "backet_id")
     private Long id;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -22,12 +22,12 @@ public class Backet {
 
     @Column(name = "total_cost")
     private Double totalCost;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;
     @Column(name = "count")
     private Integer count;
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")
-    private Order order;
+    private ProductOrder productOrder;
 }

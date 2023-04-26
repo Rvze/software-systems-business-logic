@@ -3,6 +3,7 @@ package com.nmakarov.blps.data.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 
@@ -13,7 +14,8 @@ import java.util.Set;
 @Builder
 @Getter
 @Setter
-public class Product {
+public class Product implements Serializable {
+    private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_product_id_seq")
     @SequenceGenerator(name = "product_product_id_seq", allocationSize = 1)
@@ -48,6 +50,9 @@ public class Product {
             }
     )
     private Set<Category> categories;
+
+    @ManyToMany(mappedBy = "products")
+    private Set<User> users;
 
     public Characteristic getCharacteristic() {
         return characteristic;

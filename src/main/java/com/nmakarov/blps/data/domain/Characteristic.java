@@ -3,6 +3,7 @@ package com.nmakarov.blps.data.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
@@ -12,7 +13,8 @@ import java.util.Objects;
 @Builder
 @Getter
 @Setter
-public class Characteristic {
+public class Characteristic implements Serializable {
+    private static final Long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "characteristic_characteristic_id_seq")

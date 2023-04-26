@@ -3,6 +3,7 @@ package com.nmakarov.blps.data.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Entity
@@ -12,7 +13,8 @@ import java.util.Set;
 @Builder
 @Getter
 @Setter
-public class Trademark {
+public class Trademark implements Serializable {
+    private static final Long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "trademark_trademark_id_seq")
     @SequenceGenerator(name = "trademark_trademark_id_seq", allocationSize = 1)
